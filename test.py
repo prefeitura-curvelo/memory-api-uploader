@@ -85,20 +85,83 @@ memory_api_endpoints = {
             }
         }]
    },
-    # "Compras": {
-    #     "organization": "secretaria-de-fazenda",
-    #     "endpoints": [{
-    #         "name": ""
-    #         "url_name": ""
-    #         "url": "https://publico.memory.com.br/curvelo/lai/contabilidade/convenio/exportar?page=1&size=9999&type=csv",
-    #         "filename":  "compras-$exercio$.csv",
-    #         "headers": {
-    #             "tenant-id": "99K7P1",
-    #             "entidade": "1",
-    #             "exercicio": [2023, 2024, 2025]
-    #         }
-    #     }]
-    # }
+    "Compras": {
+        "organization": "secretaria-de-fazenda",
+        "endpoints": [
+        {
+            "name": "Obras públicas",
+            "url_name": "obras-publicas",
+            "notes": "Relação de projetos, idealmente incluindo aqueles não aprovados e em análise além dos aprovados, com geolocalização, status e outras informações, como tipo, empresa responsável e contratos relacionados.",
+            "url": "https://publico.memory.com.br/curvelo/lai/obraspublicas/exportar?page=1&size=9999&type=csv",
+            "filename":  "obras-publicas-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        },
+        {
+            "name": "Compras Diretas",
+            "url_name": "compra-direta",
+            "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
+            "url": "https://publico.memory.com.br/curvelo/lai/obraspublicas/exportar?page=1&size=9999&type=csv",
+            "filename":  "compra-direta-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        },
+        {
+            "name": "NAF's",
+            "url_name": "nafs",
+            "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
+            "url": "https://publico.memory.com.br/curvelo/lai/compras/naf/exportar?page=1&size=9999&type=csv",
+            "filename":  "nafs-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        },
+        {
+            "name": "Contratos",
+            "url_name": "contratos",
+            "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
+            "url": "https://publico.memory.com.br/curvelo/lai/compras/contrato/exportar?page=1&size=9999&type=csv",
+            "filename":  "contratos-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        },
+        {
+            "name": "Editais",
+            "url_name": "editais",
+            "notes": "Relação dos processos licitatórios, incluindo chamadas e editais concluídos e em andamento, com informações sobre o número da licitação, o objeto, a modalidade, a data de abertura, o ano de exercício, status atual e, idealmente, os concorrentes e o ganhador.",
+            "url": "https://publico.memory.com.br/curvelo/lai/compras/edital/exportar?page=1&size=9999&type=csv",
+            "filename":  "edital-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        },
+        {
+            "name": "Licitações",
+            "url_name": "licitacoes",
+            "notes": "Relação dos processos licitatórios, incluindo chamadas e editais concluídos e em andamento, com informações sobre o número da licitação, o objeto, a modalidade, a data de abertura, o ano de exercício, status atual e, idealmente, os concorrentes e o ganhador.",
+            "url": "https://publico.memory.com.br/curvelo/lai/compras/licitacao/exportar?page=1&size=9999&type=csv",
+            "filename":  "licitacao-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        }
+        ]
+    }
 }
 
 def create_package(api_token, owner_org, package_title, package_name, package_description):
