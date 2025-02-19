@@ -103,7 +103,7 @@ memory_api_endpoints = {
 
 def create_package(api_token, owner_org, package_title, package_name, package_description):
     request_data = {
-      "owner_org": "financas-publicas-org",
+      "owner_org": owner_org,
       "name": unidecode(package_name),
       "notes": package_description,
       "title": package_title
