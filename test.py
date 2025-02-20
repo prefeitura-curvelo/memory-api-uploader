@@ -225,6 +225,7 @@ def upsert_resource(api_token, resource_name, resource_url_name, package_id, fil
 def fetch_data(endpoint, exercicio):
     endpoint["headers"]["exercicio"] = str(exercicio)
     filename = endpoint["filename"].replace("$exercio$", str(exercicio))
+
     resp = requests.get(endpoint["url"], headers=endpoint["headers"])
     logger.warning(f"Endpoint downloaded")
     resp_data = json.loads(resp.content)
@@ -258,21 +259,24 @@ def main():
             # Get the data
             for year in e["headers"]["exercicio"]:
                 logger.warning("Download the data for " + e["url"])
-                filepath = fetch_data(e, year)
+                try:
+                    filepath = fetch_data(e, year)
     
-                # Upload the resource
-                if filepath:
-                    resource_url_name = unidecode(f'{e["name"]} {year}')
-                    resource_url_name = resource_url_name.replace(' ', '_')
-                    resource = check_resource(resource_url_name)
+                    # Upload the resource
+                    if filepath:
+                        resource_url_name = unidecode(f'{e["name"]} {year}')
+                        resource_url_name = resource_url_name.replace(' ', '_')
+                        resource = check_resource(resource_url_name)
 
-                    if 'process' in e:
-                        e['process'](filepath)
-                    
-                    if resource:
-                        resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath, resource["resource_id"])
-                    else:
-                        resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath)
+                        if 'process' in e:
+                            e['process'](filepath)
+                        
+                        if resource:
+                            resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath, resource["resource_id"])
+                        else:
+                            resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath)
+                except:
+                    logger.warning("Error downloading data")
 
 
 if __name__ == '__main__':
