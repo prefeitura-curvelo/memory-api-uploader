@@ -238,12 +238,6 @@ def fetch_data(endpoint, exercicio):
         df.to_csv(filepath, index=False)
         return filepath
 
-    # if "path" in resp_data:
-    #     decoded_data = base64.b64decode(resp_data["path"])
-    #     file.write(decoded_data)
-    #     file.close()
-
-    #     return filepath
     else:
         return False
 
@@ -265,23 +259,24 @@ def main():
             # Get the data
             for year in e["headers"]["exercicio"]:
                 logger.warning("Download the data for " + e["url"])
-                filepath = fetch_data(e, year)
+                try:
+                    filepath = fetch_data(e, year)
     
-                # Upload the resource
-                if filepath:
-                    resource_url_name = unidecode(f'{e["name"]} {year}')
-                    resource_url_name = resource_url_name.replace(' ', '_')
-                    resource = check_resource(resource_url_name)
+                    # Upload the resource
+                    if filepath:
+                        resource_url_name = unidecode(f'{e["name"]} {year}')
+                        resource_url_name = resource_url_name.replace(' ', '_')
+                        resource = check_resource(resource_url_name)
 
-                    if 'process' in e:
-                        e['process'](filepath)
+                        if 'process' in e:
+                            e['process'](filepath)
                     
-                    if resource:
-                        resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath, resource["resource_id"])
-                    else:
-                        resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath)
-
+                        if resource:
+                            resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath, resource["resource_id"])
+                        else:
+                            resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath)
+                except:
+                    logger.warning("Error downloading data")
 
 if __name__ == '__main__':
     main()
-
