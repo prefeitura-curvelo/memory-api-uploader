@@ -34,7 +34,7 @@ memory_api_endpoints = {
                  "url_name": "servidor",
                  "notes": "Relação nominal de servidores, idealmente incluindo aposentados e pensionistas, com informações sobre cargos ocupados e as respectivas remunerações.",
                  "title": "Teste",
-                 "process": clean_servidor,
+                 #"process": clean_servidor,
                  "url": "https://publico.memory.com.br/curvelo/lai/pessoal/servidor/?page=1&size=9999",
                  "filename": "servidor-$exercio$.csv",
                  "headers": {
@@ -222,24 +222,68 @@ def upsert_resource(api_token, resource_name, resource_url_name, package_id, fil
     resposta_dict = json.loads(resultado.content)
     return resposta_dict
 
-def fetch_data(endpoint, exercicio):
-    endpoint["headers"]["exercicio"] = str(exercicio)
-    filename = endpoint["filename"].replace("$exercio$", str(exercicio))
-    resp = requests.get(endpoint["url"], headers=endpoint["headers"])
-    logger.warning(f"Endpoint downloaded")
-    resp_data = json.loads(resp.content)
-    filepath = '/tmp/' + filename
-    file = open(filepath, 'wb')
+# def fetch_data(endpoint, exercicio):
+#     endpoint["headers"]["exercicio"] = str(exercicio)
+#     filename = endpoint["filename"].replace("$exercio$", str(exercicio))
+#     resp = requests.get(endpoint["url"], headers=endpoint["headers"])
+#     logger.warning(f"Endpoint downloaded: {endpoint["name"]} OK")
+#     resp_data = json.loads(resp.content)
+#     filepath = '/tmp/' + filename
+#     file = open(filepath, 'wb')
 
-    if "data" in resp_data:
-        data_list = resp_data.get("data", [])
-        df = pd.DataFrame(data_list)
+#     if "data" in resp_data:
+#         data_list = resp_data.get("data", [])
+#         df = pd.DataFrame(data_list)
+#         df = df.replace('\r\n', '', regex=True)
+#         df.to_csv(filepath, index=False)
+#         return filepath
+
+#     else:
+#         return False
+
+def fetch_data(endpoint, exercicio):
+    filename = endpoint["filename"].replace("$exercio$", str(exercicio))
+    filepath = '/tmp/' + filename
+
+    # Verifica se o endpoint é "Gasto com pessoal" para buscar os 12 meses
+    if endpoint["url_name"] == "gasto_com_pessoal":
+        all_data = []
+        for month in range(1, 13):  # De 1 a 12 para cada mês
+            headers = endpoint["headers"].copy()
+            headers["exercicio"] = str(exercicio)
+            headers["mesano"] = str(month)
+            logger.info(f"Consultando {endpoint['name']} para {exercicio}/{month}")
+            resp = requests.get(endpoint["url"], headers=headers)
+            resp_data = json.loads(resp.content)
+            if "data" in resp_data and resp_data["data"]:
+                all_data.extend(resp_data["data"])
+            else:
+                logger.warning(f"Nenhum dado encontrado para {exercicio}/{month}")
+
+        if not all_data:
+            return False
+        
+        df = pd.DataFrame(all_data)
         df = df.replace('\r\n', '', regex=True)
         df.to_csv(filepath, index=False)
         return filepath
-
     else:
-        return False
+        # Comportamento original para outros endpoints
+        endpoint["headers"]["exercicio"] = str(exercicio)
+        resp = requests.get(endpoint["url"], headers=endpoint["headers"])
+        logger.warning(f"Endpoint downloaded: {endpoint['name']} OK")
+        resp_data = json.loads(resp.content)
+        filepath = '/tmp/' + filename
+        file = open(filepath, 'wb')
+
+        if "data" in resp_data:
+            data_list = resp_data.get("data", [])
+            df = pd.DataFrame(data_list)
+            df = df.replace('\r\n', '', regex=True)
+            df.to_csv(filepath, index=False)
+            return filepath
+        else:
+            return False
 
 def main():
     for endpoints in memory_api_endpoints.values():
@@ -258,7 +302,8 @@ def main():
     
             # Get the data
             for year in e["headers"]["exercicio"]:
-                logger.warning("Download the data for " + e["url"])
+                logger.warning(f"Download the data for {e['url']} in {year}")
+
                 try:
                     filepath = fetch_data(e, year)
     
@@ -275,8 +320,8 @@ def main():
                             resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath, resource["resource_id"])
                         else:
                             resp = upsert_resource(api_token, e["name"], resource_url_name, package_id, filepath)
-                except:
-                    logger.warning("Error downloading data")
+                except Exception as ex:
+                    logger.warning(f"Error downloading data for {e['name']} in {year}: {str(ex)}")
 
 if __name__ == '__main__':
     main()
