@@ -27,7 +27,7 @@ def clean_servidor(filepath):
 
 memory_api_endpoints = {
     "Pessoal": {
-        "organization": "secretaria-municipal-de-administracao-politicas-sociais-e-desenvolvimento-sustentavel",
+        "organization": "secretaria-de-administracao",
         "endpoints": [
              { #ok
                  "name": "Servidores, lotação e remuneração nominal e Perfil de servidores",
@@ -312,7 +312,7 @@ def main():
     
                     # Upload the resource
                     if filepath:
-                        resource_url_name = unidecode(f'{e["filename"]} {year}')
+                        resource_url_name = unidecode(f'{e["filename"]}{year}')
                         resource_url_name = resource_url_name.replace('$exercio$.csv', '')
                         resource = check_resource(resource_url_name)
 
