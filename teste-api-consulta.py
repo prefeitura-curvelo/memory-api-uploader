@@ -29,12 +29,11 @@ memory_api_endpoints = {
     "Pessoal": {
         "organization": "secretaria-municipal-de-administracao-politicas-sociais-e-desenvolvimento-sustentavel",
         "endpoints": [
-             {
-                 "name": "Servidor",
-                 "url_name": "servidor",
+             { #ok
+                 "name": "Servidores, lotação e remuneração nominal e Perfil de servidores",
+                 "url_name": "servidores-lotacao-e-remuneracao-nominal-e-perfil-de-servidores",
                  "notes": "Relação nominal de servidores, idealmente incluindo aposentados e pensionistas, com informações sobre cargos ocupados e as respectivas remunerações.",
-                 "title": "Teste",
-                 #"process": clean_servidor,
+                 "process": clean_servidor,
                  "url": "https://publico.memory.com.br/curvelo/lai/pessoal/servidor/?page=1&size=9999",
                  "filename": "servidor-$exercio$.csv",
                  "headers": {
@@ -43,9 +42,9 @@ memory_api_endpoints = {
                      "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
                  }
              },
-            {
-                "name": "Diaria de viagem",
-                "url_name": "diaria_de_viagem",
+            { # ok
+                "name": "Diárias de viagem",
+                "url_name": "diaria-de-viagem",
                 "notes": "Relação das Diárias de viagem dos servidores municipais.",
                 "url": "https://publico.memory.com.br/curvelo/lai/pessoal/diariasdeviagem/?page=1&size=9999",
                 "filename": "diaria-de-viagem-$exercio$.csv",
@@ -55,9 +54,9 @@ memory_api_endpoints = {
                     "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
                 }
              },
-             {
+             { # teste
                  "name": "Gasto com pessoal",
-                 "url_name": "gasto_com_pessoal",
+                 "url_name": "gasto-com-pessoal",
                  "notes": "Informações detalhadas sobre os gastos com pessoal e abate teto.",
                  "url": "https://publico.memory.com.br/curvelo/lai/pessoal/servidor/abateteto?page=1&size=9999",
                  "filename": "gasto-com-pessoal-$exercio$.csv",
@@ -70,11 +69,11 @@ memory_api_endpoints = {
             }
         ]
     },
-     "Contabilidade": {
+     "Contabilidade": {# ok
          "organization": "secretaria-de-fazenda",
          "endpoints": [{
-             "name": "Convênios",
-             "url_name": "convenios",
+             "name": "Informações contratuais e de execução",
+             "url_name": "informacoes-contratuais-e-de-execucao",
              "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
              "url": "https://publico.memory.com.br/curvelo/lai/contabilidade/convenio/?page=1&size=9999",
              "filename": "convenios-$exercio$.csv",
@@ -88,7 +87,7 @@ memory_api_endpoints = {
      "Compras": {
          "organization": "secretaria-de-fazenda",
          "endpoints": [
-         {
+         { # ok
              "name": "Obras públicas",
              "url_name": "obras-publicas",
              "notes": "Relação de projetos, idealmente incluindo aqueles não aprovados e em análise além dos aprovados, com geolocalização, status e outras informações, como tipo, empresa responsável e contratos relacionados.",
@@ -100,9 +99,9 @@ memory_api_endpoints = {
                  "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
              }
          },
-         {
-             "name": "Compras Diretas",
-             "url_name": "compra-direta",
+         { # ok
+             "name": "Informações contratuais e de execução das Compras Diretas",
+             "url_name": "informacoes-contratuais-e-de-execucao-das-compras-diretas",
              "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
              "url": "https://publico.memory.com.br/curvelo/lai/obraspublicas/?page=1&size=9999",
              "filename":  "compra-direta-$exercio$.csv",
@@ -112,9 +111,9 @@ memory_api_endpoints = {
                  "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
              }
          },
-         {
-             "name": "NAF's",
-             "url_name": "nafs",
+         { # ok
+             "name": "Informações contratuais e de execução das NAF's",
+             "url_name": "informacoes-contratuais-e-de-execucao-das-nafs",
              "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
              "url": "https://publico.memory.com.br/curvelo/lai/compras/naf/?page=1&size=9999",
              "filename":  "nafs-$exercio$.csv",
@@ -124,9 +123,9 @@ memory_api_endpoints = {
                  "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
              }
          },
-         {
-             "name": "Contratos",
-             "url_name": "contratos",
+         { # ok
+             "name": "Informações contratuais e de execução dos Contratos",
+             "url_name": "informacoes-contratuais-e-de-execucao-dos-contratos",
              "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
              "url": "https://publico.memory.com.br/curvelo/lai/compras/contrato/?page=1&size=9999",
              "filename":  "contratos-$exercio$.csv",
@@ -136,9 +135,9 @@ memory_api_endpoints = {
                  "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
              }
          },
-        {
-            "name": "Editais",
-            "url_name": "editais",
+        { # ok
+            "name": "Processos licitatórios",
+            "url_name": "processos-licitatorios",
             "notes": "Relação dos processos licitatórios, incluindo chamadas e editais concluídos e em andamento, com informações sobre o número da licitação, o objeto, a modalidade, a data de abertura, o ano de exercício, status atual e, idealmente, os concorrentes e o ganhador.",
             "url": "https://publico.memory.com.br/curvelo/lai/compras/edital/?page=1&size=9999",
             "filename":  "edital-$exercio$.csv",
@@ -148,9 +147,21 @@ memory_api_endpoints = {
                 "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
             }
         },
-        {
-            "name": "Licitações",
-            "url_name": "licitacoes",
+        { # ok
+            "name": "Informações contratuais e de execução",
+            "url_name": "informacoes-contratuais-e-de-execucao",
+            "notes": "Relação de contratos, convênios e parcerias, incluindo quem e o que contratou, informações sobre a contratada/parceira, valores, data e período de contratação e, idealmente, modalidade e informações sobre o certame que a originou.",
+            "url": "https://publico.memory.com.br/curvelo/lai/compras/contrato/?page=1&size=9999",
+            "filename":  "contrato-$exercio$.csv",
+            "headers": {
+                "tenant-id": "99K7P1",
+                "entidade": "1",
+                "exercicio": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+            }
+        },
+        { # ok
+            "name": "Processos licitatórios",
+            "url_name": "processos-licitatorios",
             "notes": "Relação dos processos licitatórios, incluindo chamadas e editais concluídos e em andamento, com informações sobre o número da licitação, o objeto, a modalidade, a data de abertura, o ano de exercício, status atual e, idealmente, os concorrentes e o ganhador.",
             "url": "https://publico.memory.com.br/curvelo/lai/compras/licitacao/?page=1&size=9999",
             "filename":  "licitacao-$exercio$.csv",
@@ -229,15 +240,7 @@ def upsert_resource(api_token, resource_name, resource_url_name, package_id, fil
 #     logger.warning(f"Endpoint downloaded: {endpoint["name"]} OK")
 #     resp_data = json.loads(resp.content)
 #     filepath = '/tmp/' + filename
-#     file = open(filepath, 'wb')
-
-#     if "data" in resp_data:
-#         data_list = resp_data.get("data", [])
-#         df = pd.DataFrame(data_list)
-#         df = df.replace('\r\n', '', regex=True)
-#         df.to_csv(filepath, index=False)
-#         return filepath
-
+#     file = open(filepath, 'wb')url_name
 #     else:
 #         return False
 
@@ -246,7 +249,7 @@ def fetch_data(endpoint, exercicio):
     filepath = '/tmp/' + filename
 
     # Verifica se o endpoint é "Gasto com pessoal" para buscar os 12 meses
-    if endpoint["url_name"] == "gasto_com_pessoal":
+    if endpoint["url_name"] == "gasto-com-pessoal":
         all_data = []
         for month in range(1, 13):  # De 1 a 12 para cada mês
             headers = endpoint["headers"].copy()
@@ -309,8 +312,8 @@ def main():
     
                     # Upload the resource
                     if filepath:
-                        resource_url_name = unidecode(f'{e["name"]} {year}')
-                        resource_url_name = resource_url_name.replace(' ', '_')
+                        resource_url_name = unidecode(f'{e["filename"]} {year}')
+                        resource_url_name = resource_url_name.replace('$exercio$.csv', '')
                         resource = check_resource(resource_url_name)
 
                         if 'process' in e:
